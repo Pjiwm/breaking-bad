@@ -1,5 +1,6 @@
 package com.example.breakingbadv2;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +13,9 @@ import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
             loadCharacterAPIData();
         }
 
+        /* Search filter */
         EditText editText = findViewById(R.id.search_bar);
         editText.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -68,6 +73,47 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
             }
         });
     }
+
+    /**
+     * Creates a menu at the top of the activity with pressable options.
+     * @param menu - the menu items we can select
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.filter_menu, menu);
+        return true;
+    }
+
+    /**
+     * Checks what menu item was pressed.
+     * It filters the character list based on the selected status.
+     * @param item - the selected item from the filter_menu
+     * @return - selected item
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.alive:
+                filterStatus("alive");
+                return true;
+            case R.id.deceased:
+                filterStatus("deceased");
+                return true;
+            case R.id.presumed_dead:
+                filterStatus("presumed dead");
+                return true;
+            case R.id.unknown:
+                filterStatus("unknown");
+                return true;
+            case R.id.search_all:
+                filterStatus("");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * stores given values, so they can be used even after apps state resets.
      *
@@ -92,6 +138,9 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         Log.d(TAG, "Called onRestoreInstanceState - found saved instance");
         characterList = savedInstanceState.getParcelableArrayList(CHARACTER_STATE);
+        characterAdapter = new CharacterAdapter(characterList, MainActivity.this);
+        characterRecyclerView.setAdapter(characterAdapter);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -99,14 +148,15 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
     protected void onRestart() {
         Log.d(TAG, "Called onRestart");
         super.onRestart();
-        System.out.println(time + LocalDateTime.now().toString());
+        String welcome = getString(R.string.welcome);
         try {
             long seconds = ChronoUnit.SECONDS.between(time, LocalDateTime.now());
-            Toast.makeText(this, "Took " + seconds + " seconds", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, seconds + " " + welcome, Toast.LENGTH_SHORT).show();
         } catch (NullPointerException e) {
             Toast.makeText(this, "welcome back", Toast.LENGTH_SHORT).show();
         }
     }
+
     /**
      * when all API data has been fetched they'l be set to characterList.
      *
@@ -143,5 +193,17 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
         Log.d(TAG, "Called showCharacterToast");
         String characterFound = getString(R.string.characters_found);
         Toast.makeText(this, size + " " + characterFound, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * sets new characterlist by filtering from character status
+     * @param status - the status of the character you want to dispaly
+     */
+    private void filterStatus(String status) {
+        Log.d(TAG, "Called filterStatus");
+        ArrayList<Character> filteredList = SearchUtil.filteredByStatus(characterList, status);
+        characterAdapter = new CharacterAdapter(filteredList, MainActivity.this);
+        characterRecyclerView.setAdapter(characterAdapter);
+        showCharacterToast(filteredList.size());
     }
 }

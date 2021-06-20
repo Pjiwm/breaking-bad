@@ -20,7 +20,7 @@ public class QuotesAPITask extends AsyncTask<String, Void, List<String>> {
 
     private final String TAG = getClass().getSimpleName();
     private final String JSON_QUOTE = "quote";
-    private QuotesListener listener = null;
+    private QuotesListener listener;
     public QuotesAPITask(QuotesListener listener) {
         this.listener = listener;
     }

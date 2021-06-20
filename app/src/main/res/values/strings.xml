@@ -7,4 +7,5 @@
     <string name="characters_found"> characters found</string>
     <string name="search_hint">search by name!</string>
     <string name="app_name">Breaking Bad</string>
+    <string name="welcome">seconds have passed before returning to homescreen</string>
 </resources>

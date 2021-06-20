@@ -22,7 +22,6 @@ public class MoreInfoActivity extends AppCompatActivity implements QuotesAPITask
     private TextView mCharacterQuotes;
     private final String TAG = this.getClass().getSimpleName();
 
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,6 @@ public class MoreInfoActivity extends AppCompatActivity implements QuotesAPITask
                 character.getStatus());
         mCharacterDetails.setText(info);
 
-
         mCharacterImage = findViewById(R.id.character_image_iv);
         Picasso
                 .get()
@@ -61,8 +59,6 @@ public class MoreInfoActivity extends AppCompatActivity implements QuotesAPITask
         new QuotesAPITask(this).execute(params); // Background Thread
 
     }
-
-
     /**
      * sets quotes after data from API has been fetched
      * @param quotes - the list of quotes that will be displayed

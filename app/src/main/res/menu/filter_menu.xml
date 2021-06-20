@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/filter"
+        android:icon="@drawable/ic_status_filter"
+        android:title="filter by status"
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item android:id="@+id/alive"
+                android:title="@string/alive"/>
+            <item android:id="@+id/deceased"
+                android:title="@string/deceased"/>
+            <item android:id="@+id/presumed_dead"
+                android:title="@string/presumed_dead"/>
+            <item android:id="@+id/unknown"
+                android:title="@string/unknown"/>
+            <item android:id="@+id/search_all"
+                android:title="@string/search_all"/>
+        </menu>
+    </item>
+</menu>
