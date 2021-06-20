@@ -17,9 +17,12 @@ import java.util.List;
 
 public class MoreInfoActivity extends AppCompatActivity implements QuotesAPITask.QuotesListener {
     private TextView mCharacterName;
-    private TextView mCharacterDetails;
+    private TextView mCharacterJob;
+    private TextView mCharacterNickname;
+    private TextView mCharacterSeasons;
     private ImageView mCharacterImage;
     private TextView mCharacterQuotes;
+    private TextView mCharacterStatus;
     private final String TAG = this.getClass().getSimpleName();
 
     @SuppressLint("SetTextI18n")
@@ -36,14 +39,22 @@ public class MoreInfoActivity extends AppCompatActivity implements QuotesAPITask
         mCharacterName = findViewById(R.id.character_name_tv);
         mCharacterName.setText(character.getName() + " ("  + character.getBirthDate() + ")");
 
-        mCharacterDetails = findViewById(R.id.character_details_tv);
-        String info = String.format("known as %s, works as: %s " +
-                        "\n participated seasons: %s \n character is: %s",
-                character.getNickname(),
-                character.getJobTitle(),
-                character.getParticipatedSeasons(),
-                character.getStatus());
-        mCharacterDetails.setText(info);
+        mCharacterNickname = findViewById(R.id.character_nickname_tv);
+        mCharacterNickname.setText("Known as: " + character.getNickname());
+
+        mCharacterJob = findViewById(R.id.character_job_tv);
+        mCharacterJob.setText("works as: " + character.getJobTitle());
+
+        mCharacterSeasons = findViewById(R.id.character_seasons_tv);
+        mCharacterSeasons.setText("participated in season(s): " + character.getParticipatedSeasons());
+
+        mCharacterStatus = findViewById(R.id.character_status_tv);
+        mCharacterStatus.setText("status: " + character.getStatus());
+
+
+
+
+
 
         mCharacterImage = findViewById(R.id.character_image_iv);
         Picasso

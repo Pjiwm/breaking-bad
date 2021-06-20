@@ -57,7 +57,8 @@ public class Character implements Serializable, Parcelable {
 
     public String getNickname() {
         Log.d(TAG, "called getNickname");
-        return nickname;
+        int endIndex = nickname.length() -1;
+        return nickname.substring(0, endIndex);
     }
 
     public String getStatus() {

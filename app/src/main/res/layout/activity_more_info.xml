@@ -17,17 +17,38 @@
             android:textSize="28sp"
             android:padding="10dp"/>
         <TextView
-            android:id="@+id/character_details_tv"
+            android:id="@+id/character_nickname_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="15sp"
             android:textAlignment="center"
-            android:padding="10dp"/>
+            android:padding="5dp"/>
+        <TextView
+            android:id="@+id/character_job_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:padding="5dp"/>
+        <TextView
+            android:id="@+id/character_seasons_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:padding="5dp"/>
+        <TextView
+            android:id="@+id/character_status_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:padding="5dp"/>
         <TextView
             android:id="@+id/character_quotes_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textAlignment="center"
             android:padding="10dp"/>
         <ImageView

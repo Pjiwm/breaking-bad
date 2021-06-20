@@ -1,11 +1,11 @@
 <resources>
-    <string name="alive">alive</string>
-    <string name="deceased">deceased</string>
-    <string name="presumed_dead">presumed dead</string>
-    <string name="unknown">unknown</string>
-    <string name="search_all">search all</string>
-    <string name="characters_found"> characters found</string>
-    <string name="search_hint">search by name!</string>
     <string name="app_name">Breaking Bad</string>
-    <string name="welcome">seconds have passed before returning to homescreen</string>
+    <string name="welcome">seconds have passed since leaving the homescreen.</string>
+    <string name="search_hint">search by name!</string>
+    <string name="characters_found">characters found</string>
+    <string name="search_all">search all</string>
+    <string name="unknown">unknown</string>
+    <string name="presumed_dead">presumed dead</string>
+    <string name="deceased">deceased</string>
+    <string name="alive">alive</string>
 </resources>

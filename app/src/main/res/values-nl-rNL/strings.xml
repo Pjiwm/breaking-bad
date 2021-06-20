@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Breaking Bad</string>
+    <string name="welcome">seconde(n) gepasseerd sinds het verlaten van dit scherm.</string>
+    <string name="search_hint">zoek bij naam!</string>
+    <string name="characters_found">karakters gevonden</string>
+    <string name="search_all">zoek alles</string>
+    <string name="unknown">onbekend</string>
+    <string name="presumed_dead">waarschijnlijk dood</string>
+    <string name="deceased">overleden</string>
+    <string name="alive">leeft</string>
+</resources>
