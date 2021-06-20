@@ -9,13 +9,17 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
 import com.example.breakingbadv2.domain.Character;
 import com.example.breakingbadv2.services.CharacterAPITask;
 import com.example.breakingbadv2.utils.CharacterAdapter;
+import com.example.breakingbadv2.utils.SearchUtil;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -28,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
     private RecyclerView characterRecyclerView;
     private CharacterAdapter characterAdapter;
     private final String TAG = this.getClass().getSimpleName();
-    LocalDateTime time;
+    private LocalDateTime time;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
         Context context = this;
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, orientation, false);
         characterRecyclerView.setLayoutManager(layoutManager);
+
         if (savedInstanceState != null) {
             Log.d(TAG, "Called onCreate - found saved instance");
             characterList = savedInstanceState.getParcelableArrayList(CHARACTER_STATE);
@@ -50,13 +55,22 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
             loadCharacterAPIData();
         }
 
-        this.characterAdapter = new CharacterAdapter(characterList, this);
-        characterRecyclerView.setAdapter(characterAdapter);
-
+        EditText editText = findViewById(R.id.search_bar);
+        editText.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                ArrayList<Character> filteredList = SearchUtil.filteredByName(characterList, s.toString());
+                characterAdapter = new CharacterAdapter(filteredList, MainActivity.this);
+                characterRecyclerView.setAdapter(characterAdapter);
+                showCharacterToast(filteredList.size());
+            }
+        });
     }
-
     /**
      * stores given values, so they can be used even after apps state resets.
+     *
      * @param outState - the states that are being stored
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -68,9 +82,9 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
         outState.putParcelableArrayList(CHARACTER_STATE, (ArrayList<? extends Parcelable>) characterList);
         this.time = oldTime;
     }
-
     /**
      * used when activity is destroyed, this way API call doesn't have to be called.
+     *
      * @param savedInstanceState - the instance that restores values
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -83,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onRestart() {
+        Log.d(TAG, "Called onRestart");
         super.onRestart();
         System.out.println(time + LocalDateTime.now().toString());
         try {
@@ -92,9 +107,9 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
             Toast.makeText(this, "welcome back", Toast.LENGTH_SHORT).show();
         }
     }
-
     /**
      * when all API data has been fetched they'l be set to characterList.
+     *
      * @param characters - the list of characters that will show up
      */
     @Override
@@ -103,12 +118,14 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
         this.characterList.clear();
         try {
             this.characterList.addAll(characters);
+            showCharacterToast(characterList.size());
+            this.characterAdapter = new CharacterAdapter(characterList, this);
+            characterRecyclerView.setAdapter(characterAdapter);
+            this.characterAdapter.notifyDataSetChanged();
         } catch (NullPointerException e) {
             Toast.makeText(this, "API offline", Toast.LENGTH_SHORT).show();
         }
-        this.characterAdapter.notifyDataSetChanged();
     }
-
     /**
      * Starts API task and gives params for API link
      */
@@ -117,5 +134,14 @@ public class MainActivity extends AppCompatActivity implements CharacterAPITask.
         String[] params = {"https://www.breakingbadapi.com/api/characters"};
         new CharacterAPITask(this).execute(params);
     }
-
+    /**
+     * shows a toast with how many characters have been found
+     *
+     * @param size - the amount that will be shown in the toast
+     */
+    private void showCharacterToast(int size) {
+        Log.d(TAG, "Called showCharacterToast");
+        String characterFound = getString(R.string.characters_found);
+        Toast.makeText(this, size + " " + characterFound, Toast.LENGTH_LONG).show();
+    }
 }

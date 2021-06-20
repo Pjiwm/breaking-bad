@@ -21,10 +21,10 @@ public class CharacterViewHolder  extends RecyclerView.ViewHolder {
 
     public CharacterViewHolder(@NonNull View itemView) {
         super(itemView);
-        mCharacterName = (TextView) itemView.findViewById(R.id.character_list_item_character_name);
-        mCharacterNickname = (TextView) itemView.findViewById(R.id.character_list_item_character_nickname);
-        mCharacterStatus = (TextView) itemView.findViewById(R.id.character_list_item_character_status);
-        mCharacterImage = (ImageView) itemView.findViewById(R.id.character_list_item_img);
+        mCharacterName = itemView.findViewById(R.id.character_list_item_character_name);
+        mCharacterNickname = itemView.findViewById(R.id.character_list_item_character_nickname);
+        mCharacterStatus = itemView.findViewById(R.id.character_list_item_character_status);
+        mCharacterImage = itemView.findViewById(R.id.character_list_item_img);
         mLinearLayoutInfo = itemView.findViewById(R.id.linear_layout_info);
     }
 }
