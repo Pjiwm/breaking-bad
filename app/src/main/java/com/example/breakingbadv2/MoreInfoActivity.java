@@ -35,16 +35,17 @@ public class MoreInfoActivity extends AppCompatActivity implements QuotesAPITask
         Character character = (Character) intent.getSerializableExtra("character");
 
         mCharacterName = findViewById(R.id.character_name_tv);
-        mCharacterName.setText("name: " + character.getName());
+        mCharacterName.setText(character.getName() + " ("  + character.getBirthDate() + ")");
 
         mCharacterDetails = findViewById(R.id.character_details_tv);
-        mCharacterDetails.setText("details:"
-                + character.getName()
-                + character.getBirthDate()
-                + character.getJobTitle()
-                + character.getNickname()
-                + character.getParticipatedSeasons()
-                + character.getStatus());
+        String info = String.format("known as %s, works as: %s " +
+                        "\n participated seasons: %s \n character is: %s",
+                character.getNickname(),
+                character.getJobTitle(),
+                character.getParticipatedSeasons(),
+                character.getStatus());
+        mCharacterDetails.setText(info);
+
 
         mCharacterImage = findViewById(R.id.character_image_iv);
         Picasso

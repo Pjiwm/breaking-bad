@@ -58,7 +58,6 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder> 
         Context context = parent.getContext();
         int layoutIdForListItem = R.layout.character_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
-        boolean shouldAttachToParentImmediately = false;
         View view = inflater.inflate(layoutIdForListItem, parent, false);
         return new CharacterViewHolder(view);
     }
@@ -104,6 +103,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder> 
     }
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        Log.d(TAG, "Called writeToParcel");
         dest.writeString(TAG);
         dest.writeString(toastMsg);
         dest.writeString(charactersFound);
