@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -76,13 +77,17 @@ public class MoreInfoActivity extends AppCompatActivity implements QuotesAPITask
      */
     @Override
     public void onQuotesAvailable(List<String> quotes) {
-        Log.d(TAG, "called onQuotesAvailable");
-        if (quotes.size() > 0) {
-            StringBuilder quotesString = new StringBuilder("Quotes: \n");
-            for (String quote : quotes) {
-                quotesString.append(quote).append("\n \n");
+        try {
+            Log.d(TAG, "called onQuotesAvailable");
+            if (quotes.size() > 0) {
+                StringBuilder quotesString = new StringBuilder("Quotes: \n");
+                for (String quote : quotes) {
+                    quotesString.append(quote).append("\n \n");
+                }
+                mCharacterQuotes.setText(quotesString);
             }
-            mCharacterQuotes.setText(quotesString);
+        } catch (NullPointerException e) {
+            Toast.makeText(this, "API offline", Toast.LENGTH_LONG);
         }
     }
 }

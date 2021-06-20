@@ -63,7 +63,7 @@ public class QuotesAPITask extends AsyncTask<String, Void, List<String>> {
     @Override
     protected void onPostExecute(List<String> quotes) {
         super.onPostExecute(quotes);
-        Log.d(TAG, "In onPostExcecute: " + quotes.size() + " items.");
+        Log.d(TAG, "called onPostExcecute");
         listener.onQuotesAvailable(quotes);
     }
 
