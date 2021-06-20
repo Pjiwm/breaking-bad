@@ -1,11 +1,13 @@
 package com.example.breakingbadv2.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.io.Serializable;
 
-public class Character implements Serializable {
-    private final String TAG = this.getClass().getSimpleName();
+public class Character implements Serializable, Parcelable {
+    private String TAG = this.getClass().getSimpleName();
     private String name;
     private String nickname;
     private String status;
@@ -24,6 +26,29 @@ public class Character implements Serializable {
         this.participatedSeasons = participatedSeasons;
         this.imageUrl = imageUrl;
     }
+
+    protected Character(Parcel in) {
+        TAG = in.readString();
+        name = in.readString();
+        nickname = in.readString();
+        status = in.readString();
+        birthDate = in.readString();
+        jobTitle = in.readString();
+        participatedSeasons = in.readString();
+        imageUrl = in.readString();
+    }
+
+    public static final Creator<Character> CREATOR = new Creator<Character>() {
+        @Override
+        public Character createFromParcel(Parcel in) {
+            return new Character(in);
+        }
+
+        @Override
+        public Character[] newArray(int size) {
+            return new Character[size];
+        }
+    };
 
     public String getName() {
         Log.d(TAG, "called getName");
@@ -58,5 +83,22 @@ public class Character implements Serializable {
     public String getImageUrl() {
         Log.d(TAG, "called getImageUrl");
         return imageUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(TAG);
+        dest.writeString(name);
+        dest.writeString(nickname);
+        dest.writeString(status);
+        dest.writeString(birthDate);
+        dest.writeString(jobTitle);
+        dest.writeString(participatedSeasons);
+        dest.writeString(imageUrl);
     }
 }

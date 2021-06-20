@@ -79,7 +79,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder> 
         //      opens detail page for character.
         holder.mLinearLayoutInfo.setOnClickListener((l) -> {
             Intent intent = new Intent(context, MoreInfoActivity.class);
-            intent.putExtra("character", character);
+            intent.putExtra("character", (Parcelable) character);
             context.startActivity(intent);
             Log.d(TAG, "onClick was called from linearlayout");
         });
